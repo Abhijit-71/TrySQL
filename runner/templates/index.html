@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Shell Notebook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2563eb;
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .tip-box {
+            background: #dbeafe;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            color: #1e40af;
+            font-size: 14px;
+        }
+
+        .tip-box code {
+            background: #bfdbfe;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .cell {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .input-section {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .cell-header {
+            background: #f8fafc;
+            padding: 10px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cell-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+
+        .cell-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-run {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-run:hover {
+            background: #15803d;
+        }
+
+        .btn-run:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .btn-delete {
+            background: transparent;
+            color: #dc2626;
+            border: none;
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background: #fee2e2;
+        }
+
+        .btn-delete:disabled {
+            color: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        .input-area {
+            padding: 20px;
+        }
+
+        .input-area textarea {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .input-area textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-hint {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .output-section {
+            background: #0f172a;
+            display: none;
+        }
+
+        .output-section.has-output {
+            display: block;
+        }
+
+        .output-header {
+            background: #1e293b;
+            padding: 10px 20px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .output-header .cell-label {
+            color: #64748b;
+        }
+
+        .output-area {
+            padding: 20px;
+        }
+
+        .output-area pre {
+            color: #4ade80;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+        }
+
+        .btn-add-cell {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .btn-add-cell:hover {
+            background: #1d4ed8;
+        }
+
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Interactive Shell</h1>
+            <p>A friendly command-line interface. Type commands and press the Run button or Ctrl+Enter.</p>
+            <div class="tip-box">
+                💡 <strong>Tip:</strong> Try commands like <code>echo Hello</code>, <code>date</code>, <code>ls</code>, or <code>help</code>
+            </div>
+        </div>
+
+        <div id="cells-container"></div>
+
+        <button class="btn-add-cell" onclick="addCell()">
+            <span>➕</span>
+            <span>Add New Cell</span>
+        </button>
+
+        <div class="footer">
+            <p>This is a demo interactive shell. In a real implementation, commands would execute on a backend server.</p>
+        </div>
+    </div>
+
+    <script>
+        var cellIdCounter = 1;
+        var cells = [];
+
+        function createCell() {
+            var id = cellIdCounter++;
+            var cell = {
+                id: id,
+                input: '',
+                output: '',
+                element: null
+            };
+            cells.push(cell);
+            renderCell(cell);
+            return cell;
+        }
+
+        function renderCell(cell) {
+            var container = document.getElementById('cells-container');
+            var index = cells.indexOf(cell);
+            
+            var cellDiv = document.createElement('div');
+            cellDiv.className = 'cell';
+            cellDiv.id = 'cell-' + cell.id;
+            
+            var disabledAttr = cells.length === 1 ? 'disabled' : '';
+            
+            cellDiv.innerHTML = '<div class="input-section">' +
+                '<div class="cell-header">' +
+                    '<span class="cell-label">[' + (index + 1) + '] INPUT</span>' +
+                    '<div class="cell-actions">' +
+                        '<button class="btn-run" onclick="runCell(' + cell.id + ')">▶ Run</button>' +
+                        '<button class="btn-delete" onclick="deleteCell(' + cell.id + ')" ' + disabledAttr + '>🗑️</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="input-area">' +
+                    '<textarea id="input-' + cell.id + '" placeholder="Type your command here..." onkeydown="handleKeyDown(event, ' + cell.id + ')"></textarea>' +
+                    '<div class="input-hint">Press Ctrl+Enter to run</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="output-section" id="output-section-' + cell.id + '">' +
+                '<div class="output-header">' +
+                    '<span class="cell-label">[' + (index + 1) + '] OUTPUT</span>' +
+                '</div>' +
+                '<div class="output-area">' +
+                    '<pre id="output-' + cell.id + '"></pre>' +
+                '</div>' +
+            '</div>';
+            
+            container.appendChild(cellDiv);
+            cell.element = cellDiv;
+        }
+
+        function runCell(cellId) {
+            var cell = cells.find(function(c) { return c.id === cellId; });
+            if (!cell) return;
+            
+            var inputEl = document.getElementById('input-' + cellId);
+            var outputEl = document.getElementById('output-' + cellId);
+            var outputSection = document.getElementById('output-section-' + cellId);
+            
+            var command = inputEl.value.trim();
+            if (!command) return;
+            
+            var output = executeCommand(command);
+            
+            outputEl.textContent = output;
+            outputSection.classList.add('has-output');
+        }
+
+        function executeCommand(cmd) {
+            cmd = cmd.trim();
+            
+            if (cmd.indexOf('echo ') === 0) {
+                return cmd.substring(5);
+            } else if (cmd === 'date') {
+                return new Date().toString();
+            } else if (cmd === 'pwd') {
+                return '/home/user';
+            } else if (cmd === 'ls') {
+                return 'Documents\nDownloads\nPictures\nVideos\nMusic';
+            } else if (cmd === 'whoami') {
+                return 'user';
+            } else if (cmd === 'uname') {
+                return 'Linux';
+            } else if (cmd === 'clear') {
+                return '';
+            } else if (cmd === 'help') {
+                return 'Available commands:\n  echo <text>  - Print text\n  date         - Show current date\n  pwd          - Print working directory\n  ls           - List files\n  whoami       - Show current user\n  uname        - Show system info\n  clear        - Clear output\n  help         - Show this help';
+            } else {
+                return '$ ' + cmd + '\nCommand executed successfully!\n\n(In a real shell, this would run on a server)';
+            }
+        }
+
+        function deleteCell(cellId) {
+            if (cells.length === 1) return;
+            
+            var cellIndex = cells.findIndex(function(c) { return c.id === cellId; });
+            if (cellIndex === -1) return;
+            
+            cells.splice(cellIndex, 1);
+            var cellEl = document.getElementById('cell-' + cellId);
+            cellEl.remove();
+            
+            rerenderAllCells();
+        }
+
+        function addCell() {
+            createCell();
+        }
+
+        function handleKeyDown(event, cellId) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                event.preventDefault();
+                runCell(cellId);
+            }
+        }
+
+        function rerenderAllCells() {
+            var container = document.getElementById('cells-container');
+            container.innerHTML = '';
+            cells.forEach(function(cell) {
+                var inputEl = document.getElementById('input-' + cell.id);
+                var input = inputEl ? inputEl.value : '';
+                cell.input = input;
+                renderCell(cell);
+                document.getElementById('input-' + cell.id).value = input;
+                
+                if (cell.output) {
+                    var outputEl = document.getElementById('output-' + cell.id);
+                    var outputSection = document.getElementById('output-section-' + cell.id);
+                    outputEl.textContent = cell.output;
+                    outputSection.classList.add('has-output');
+                }
+            });
+        }
+
+        createCell();
+    </script>
+</body>
+</html>
