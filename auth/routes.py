@@ -1,8 +1,10 @@
 from flask import request , jsonify , render_template
+from flask_jwt_extended import create_access_token , set_access_cookies , unset_access_cookies , jwt_required
 from auth import auth
 from app.models import db , User
-from flask_jwt_extended import create_access_token , set_access_cookies
 
+
+# register api routes
 @auth.route("/reg-api",methods=["POST"])
 def reg_api():
     data = request.get_json()
@@ -20,7 +22,7 @@ def reg_api():
     return jsonify({"msg": "User registered successfully"}), 201
     
         
-
+# register api routes
 @auth.route("/login-api",methods=["POST"])
 def login_api():
     data = request.get_json()
@@ -36,11 +38,19 @@ def login_api():
     access_token = create_access_token(identity=str(user.id))
     resp = jsonify({"msg": "login successful"},200)
     set_access_cookies(resp,access_token)
+    return resp
+
+
+@auth.route("/logout-api", methods=["POST"])
+@jwt_required()
+def logout_api():
+    resp = jsonify({"msg": "logged out"})
+    unset_access_cookies(resp)
     return resp, 200
 
 
 
-
+#page serving routes
 
 @auth.route("/register")
 def register():

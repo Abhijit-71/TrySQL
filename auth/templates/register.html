@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register - Interactive Shell</title>
+    <title>Register</title>
     <style>
       * {
         margin: 0;
@@ -12,142 +12,101 @@
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #252737;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
       .register-container {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 450px;
-        padding: 50px 40px;
-      }
+            background: #0f1423;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 450px;
+            padding: 50px 40px;
+            border: 1px solid rgba(168, 255, 120, 0.1);
+        }
 
-      .logo {
-        text-align: center;
-        margin-bottom: 30px;
-      }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-      .logo-icon {
-        font-size: 64px;
-        margin-bottom: 10px;
-      }
+        .logo-icon {
+            font-size: 64px;
+            margin-bottom: 10px;
+        }
 
-      .logo h1 {
-        font-size: 28px;
-        color: #1f2937;
-        margin-bottom: 5px;
-      }
+        .logo h1 {
+            font-size: 28px;
+            color: #e8e7fc;
+            margin-bottom: 5px;
+        }
 
-      .logo p {
-        color: #6b7280;
-        font-size: 14px;
-      }
+        .logo p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
 
-      .form-group {
-        margin-bottom: 20px;
-      }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-      .form-group label {
-        display: block;
-        color: #374151;
-        font-weight: 600;
-        margin-bottom: 8px;
-        font-size: 14px;
-      }
+        .form-group label {
+            display: block;
+            color: #e5e7eb;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
 
-      .form-group input {
-        width: 100%;
-        padding: 14px 16px;
-        border: 2px solid #e5e7eb;
-        border-radius: 10px;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        font-family: inherit;
-      }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #3a3d47;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #1a1d29;
+            color: #ffffff;
+        }
 
-      .form-group input:focus {
-        outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-      }
+        .form-group input:focus {
+            outline: none;
+            border-color: #a8ff78;
+            box-shadow: 0 0 0 2px rgba(168, 255, 120, 0.1);
+        }
 
-      .password-wrapper {
-        position: relative;
-      }
+        .password-wrapper {
+            position: relative;
+        }
 
-      .password-wrapper input {
-        padding-right: 50px;
-      }
+        .password-wrapper input {
+            padding-right: 50px;
+        }
 
-      .toggle-password {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 8px;
-        font-size: 20px;
-        color: #6b7280;
-        transition: color 0.2s ease;
-      }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 55%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            font-size: 20px;
+            color: #9ca3af;
+            transition: color 0.2s ease;
+        }
 
-      .toggle-password:hover {
-        color: #374151;
-      }
-
-      .password-strength {
-        margin-top: 8px;
-        display: none;
-      }
-
-      .password-strength.show {
-        display: block;
-      }
-
-      .strength-bar {
-        height: 4px;
-        background: #e5e7eb;
-        border-radius: 2px;
-        overflow: hidden;
-        margin-bottom: 5px;
-      }
-
-      .strength-fill {
-        height: 100%;
-        width: 0%;
-        transition: all 0.3s ease;
-        border-radius: 2px;
-      }
-
-      .strength-fill.weak {
-        width: 33%;
-        background: #ef4444;
-      }
-
-      .strength-fill.medium {
-        width: 66%;
-        background: #f59e0b;
-      }
-
-      .strength-fill.strong {
-        width: 100%;
-        background: #10b981;
-      }
-
-      .strength-text {
-        font-size: 12px;
-        color: #6b7280;
-      }
+        .toggle-password:hover {
+            color: #a8ff78;
+        }
 
       .error-message {
         color: #ef4444;
@@ -161,98 +120,62 @@
       }
 
       .submit-btn {
-        width: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 16px;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 10px;
+       width: 100%;
+            background: #cecde2;
+            color: #1a1d29;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
       }
 
       .submit-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
       }
 
-      .submit-btn:active {
-        transform: translateY(0);
-      }
 
-      .submit-btn:disabled {
-        background: #9ca3af;
-        cursor: not-allowed;
-        transform: none;
-      }
 
-      .divider {
-        text-align: center;
-        margin: 25px 0;
-        color: #9ca3af;
-        font-size: 14px;
-      }
-
-      .login-link {
-        text-align: center;
-        color: #6b7280;
-        font-size: 14px;
-      }
-
-      .login-link a {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      .login-link a:hover {
-        text-decoration: underline;
-      }
-
-      .success-message {
-        background: #d1fae5;
-        color: #065f46;
-        padding: 12px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        font-size: 14px;
-        text-align: center;
-        display: none;
-      }
-
-      .success-message.show {
-        display: block;
-      }
-
-      @media (max-width: 480px) {
-        .register-container {
-          padding: 40px 30px;
+        .login-link {
+            margin-top: 30px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 14px;
         }
 
-        .logo h1 {
-          font-size: 24px;
+        .login-link a {
+            color: #a8ff78;
+            text-decoration: none;
+            font-weight: 600;
         }
-      }
 
-      .error-message {
-        display: none;
-        color: red;
-        font-size: 0.85rem;
-        margin-top: 4px;
-      }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
 
-      .error-message.show {
-        display: block;
-      }
+        .success-message {
+            background: rgba(168, 255, 120, 0.1);
+            color: #a8ff78;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+            border: 1px solid rgba(168, 255, 120, 0.3);
+        }
+
+        .success-message.show {
+            display: block;
+        }
     </style>
   </head>
   <body>
     <div class="register-container">
       <div class="logo">
-        <div class="logo-icon">🖥️</div>
+        <div class="logo-icon"></div>
         <h1>Create Account</h1>
         <p>Join Interactive Shell today</p>
       </div>
@@ -289,7 +212,7 @@
               class="toggle-password"
               onclick="togglePassword('password')"
             >
-              👁️
+              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="12" cy="12" r="3" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g></svg>
             </button>
           </div>
           <div class="password-strength" id="passwordStrength">
@@ -316,7 +239,7 @@
               class="toggle-password"
               onclick="togglePassword('confirmPassword')"
             >
-              👁️
+              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="12" cy="12" r="3" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g></svg>
             </button>
           </div>
           <div class="error-message" id="confirmError"></div>
@@ -324,8 +247,6 @@
 
         <button type="submit" class="submit-btn">Create Account</button>
       </form>
-
-      <div class="divider">OR</div>
 
       <div class="login-link">
         Already have an account? <a href="login">Log in</a>
@@ -339,10 +260,10 @@
 
         if (field.type === "password") {
           field.type = "text";
-          button.textContent = "🙈";
+          button.innerHTML = `<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2 2L22 22" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.71277 6.7226C3.66479 8.79527 2 12 2 12C2 12 5.63636 19 12 19C14.0503 19 15.8174 18.2734 17.2711 17.2884M11 5.05822C11.3254 5.02013 11.6588 5 12 5C18.3636 5 22 12 22 12C22 12 21.3082 13.3317 20 14.8335" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 14.2362C13.4692 14.7112 12.7684 15.0001 12 15.0001C10.3431 15.0001 9 13.657 9 12.0001C9 11.1764 9.33193 10.4303 9.86932 9.88818" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>`;
         } else {
           field.type = "password";
-          button.textContent = "👁️";
+          button.innerHTML = `<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="12" cy="12" r="3" stroke="#3a3d47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g></svg>`;
         }
       }
 

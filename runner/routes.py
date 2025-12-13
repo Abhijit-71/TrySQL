@@ -1,9 +1,12 @@
 from flask import request , jsonify , render_template
+from flask_jwt_extended import jwt_required , get_jwt_identity
 from runner import runner
 from .sql_shell import sql_runner
 from app.models import User
-from flask_jwt_extended import jwt_required , get_jwt_identity
 
+
+
+#sql_runner api io route
 @runner.route("/io",methods=["POST"])
 @jwt_required()
 def run_sql():
@@ -14,7 +17,19 @@ def run_sql():
     output_final = {"output": output, "status": "success"}
     return jsonify(output_final) , 200
 
+
+#sql_shell route
 @runner.route("/shell")
 @jwt_required()
 def shell():
     return render_template('shell.html')
+
+
+# dashboard route
+@runner.route("/dashboard")
+@jwt_required()
+def dashboard():
+    user_id = get_jwt_identity()
+    user = User.query.filter_by(id=int(user_id)).first()
+    username = user.username #type:ignore
+    return render_template('dashboard.html',username=username)
