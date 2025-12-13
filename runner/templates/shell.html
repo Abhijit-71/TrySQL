@@ -45,22 +45,6 @@
             line-height: 1.6;
         }
 
-        .tip-box {
-            background: #dbeafe;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            color: #1e40af;
-            font-size: 14px;
-        }
-
-        .tip-box code {
-            background: #bfdbfe;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-
         .cell {
             background: white;
             border-radius: 12px;
@@ -210,6 +194,10 @@
             gap: 8px;
             margin-top: 20px;
         }
+        
+        .btn-add-cell span{
+            font-size: 20px;
+        }
 
         .btn-add-cell:hover {
             background: #1d4ed8;
@@ -226,18 +214,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🖥️ Interactive Shell</h1>
-            <p>A friendly command-line interface. Type commands and press the Run button or Ctrl+Enter.</p>
-            <div class="tip-box">
-                💡 <strong>Tip:</strong> Try commands like <code>echo Hello</code>, <code>date</code>, <code>ls</code>, or <code>help</code>
-            </div>
+            <h1>🖥️ SQL Shell</h1>
+            <p>Type commands and press the Run button or Ctrl+Enter.</p>
         </div>
 
         <div id="cells-container"></div>
 
         <button class="btn-add-cell" onclick="addCell()">
-            <span>➕</span>
-            <span>Add New Cell</span>
+            <span>+</span>
+            <p>Add New Cell</p>
         </button>
 
         <div class="footer">
@@ -277,7 +262,7 @@
                     '<span class="cell-label">[' + (index + 1) + '] INPUT</span>' +
                     '<div class="cell-actions">' +
                         '<button class="btn-run" onclick="runCell(' + cell.id + ')">▶ Run</button>' +
-                        '<button class="btn-delete" onclick="deleteCell(' + cell.id + ')" ' + disabledAttr + '>🗑️</button>' +
+                        '<button class="btn-delete" onclick="deleteCell(' + cell.id + ')" ' + disabledAttr + '>✖</button>' +
                     '</div>' +
                 '</div>' +
                 '<div class="input-area">' +
@@ -309,34 +294,27 @@
             var command = inputEl.value.trim();
             if (!command) return;
             
-            var output = executeCommand(command);
+            var output = executeCommand(command)
+            .then(output => {outputEl.textContent = output;
+            })
+            .catch(err => console.error(err));; //due to async api func.
             
-            outputEl.textContent = output;
             outputSection.classList.add('has-output');
         }
 
-        function executeCommand(cmd) {
+        async function executeCommand(cmd) {
             cmd = cmd.trim();
-            
-            if (cmd.indexOf('echo ') === 0) {
-                return cmd.substring(5);
-            } else if (cmd === 'date') {
-                return new Date().toString();
-            } else if (cmd === 'pwd') {
-                return '/home/user';
-            } else if (cmd === 'ls') {
-                return 'Documents\nDownloads\nPictures\nVideos\nMusic';
-            } else if (cmd === 'whoami') {
-                return 'user';
-            } else if (cmd === 'uname') {
-                return 'Linux';
-            } else if (cmd === 'clear') {
-                return '';
-            } else if (cmd === 'help') {
-                return 'Available commands:\n  echo <text>  - Print text\n  date         - Show current date\n  pwd          - Print working directory\n  ls           - List files\n  whoami       - Show current user\n  uname        - Show system info\n  clear        - Clear output\n  help         - Show this help';
-            } else {
-                return '$ ' + cmd + '\nCommand executed successfully!\n\n(In a real shell, this would run on a server)';
-            }
+            const res = await fetch("/runner/io", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ command: cmd })
+            })
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+            const data = await res.json()
+            return data.output
         }
 
         function deleteCell(cellId) {

@@ -11,7 +11,6 @@ env/
 
 # Flask instance folder (for uploads, sqlite db, etc.)
 instance/
-*.db
 *.sqlite3
 
 # Logs
@@ -32,42 +31,21 @@ coverage.xml
 # Pytest
 .pytest_cache/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
 
 # IDE settings
 .vscode/
 .idea/
 *.swp
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Docker
-*.dockerfile
-*.dockerignore
-
 # Environment variables
 .env
 *.env
 
-# Migrations (if using Flask-Migrate/Alembic)
-migrations/
 
 # Cache
 *.cache
 __pypackages__/
+
+#databse
+user_db/
+*.db

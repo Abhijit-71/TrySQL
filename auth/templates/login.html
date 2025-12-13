@@ -1,399 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Interactive Shell</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
 
+      .login-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 420px;
+        padding: 50px 40px;
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .logo-icon {
+        font-size: 72px;
+        margin-bottom: 15px;
+      }
+
+      .logo h1 {
+        font-size: 32px;
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+
+      .logo p {
+        color: #6b7280;
+        font-size: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        color: #374151;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      }
+
+      .password-wrapper {
+        position: relative;
+      }
+
+      .password-wrapper input {
+        padding-right: 50px;
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        font-size: 20px;
+        color: #6b7280;
+        transition: color 0.2s ease;
+      }
+
+      .toggle-password:hover {
+        color: #374151;
+      }
+
+      .error-message {
+        color: #ef4444;
+        font-size: 13px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        font-size: 14px;
+      }
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #374151;
+      }
+
+      .remember-me input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .forgot-password {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .forgot-password:hover {
+        text-decoration: underline;
+      }
+
+      .submit-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      .submit-btn:active {
+        transform: translateY(0);
+      }
+
+      .submit-btn:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .divider {
+        text-align: center;
+        margin: 30px 0;
+        color: #9ca3af;
+        font-size: 14px;
+        position: relative;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        background: #e5e7eb;
+      }
+
+      .divider::before {
+        left: 0;
+      }
+
+      .divider::after {
+        right: 0;
+      }
+
+      .register-link {
+        text-align: center;
+        color: #6b7280;
+        font-size: 14px;
+      }
+
+      .register-link a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+
+      .success-message {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        text-align: center;
+        display: none;
+      }
+
+      .success-message.show {
+        display: block;
+      }
+
+      @media (max-width: 480px) {
         .login-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 420px;
-            padding: 50px 40px;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .logo-icon {
-            font-size: 72px;
-            margin-bottom: 15px;
+          padding: 40px 30px;
         }
 
         .logo h1 {
-            font-size: 32px;
-            color: #1f2937;
-            margin-bottom: 8px;
-        }
-
-        .logo p {
-            color: #6b7280;
-            font-size: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #374151;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-
-        .password-wrapper {
-            position: relative;
-        }
-
-        .password-wrapper input {
-            padding-right: 50px;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            font-size: 20px;
-            color: #6b7280;
-            transition: color 0.2s ease;
-        }
-
-        .toggle-password:hover {
-            color: #374151;
-        }
-
-        .error-message {
-            color: #ef4444;
-            font-size: 13px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
+          font-size: 28px;
         }
 
         .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            font-size: 14px;
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
         }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #374151;
-        }
-
-        .remember-me input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .forgot-password {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 30px 0;
-            color: #9ca3af;
-            font-size: 14px;
-            position: relative;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background: #e5e7eb;
-        }
-
-        .divider::before {
-            left: 0;
-        }
-
-        .divider::after {
-            right: 0;
-        }
-
-        .register-link {
-            text-align: center;
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        .register-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        .success-message {
-            background: #d1fae5;
-            color: #065f46;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            text-align: center;
-            display: none;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 40px 30px;
-            }
-
-            .logo h1 {
-                font-size: 28px;
-            }
-
-            .form-options {
-                flex-direction: column;
-                gap: 12px;
-                align-items: flex-start;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="login-container">
-        <div class="logo">
-            <div class="logo-icon">🖥️</div>
-            <h1>Welcome Back</h1>
-            <p>Login to Interactive Shell</p>
+      <div class="logo">
+        <div class="logo-icon">🖥️</div>
+        <h1>Welcome Back</h1>
+        <p>Login to Interactive Shell</p>
+      </div>
+
+      <div class="success-message" id="successMessage">
+        ✓ Login successful! Redirecting...
+      </div>
+
+      <form id="loginForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+          <div class="error-message" id="usernameError"></div>
         </div>
 
-        <div class="success-message" id="successMessage">
-            ✓ Login successful! Redirecting...
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              onclick="togglePassword()"
+            >
+              👁️
+            </button>
+          </div>
+          <div class="error-message" id="passwordError"></div>
         </div>
 
-        <form id="loginForm" onsubmit="handleSubmit(event)">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    placeholder="Enter your username"
-                    required
-                >
-                <div class="error-message" id="usernameError"></div>
-            </div>
+        <button type="submit" class="submit-btn">Login</button>
+      </form>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="password-wrapper">
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Enter your password"
-                        required
-                    >
-                    <button type="button" class="toggle-password" onclick="togglePassword()">
-                        👁️
-                    </button>
-                </div>
-                <div class="error-message" id="passwordError"></div>
-            </div>
+      <div class="divider">OR</div>
 
-            <div class="form-options">
-                <label class="remember-me">
-                    <input type="checkbox" id="rememberMe">
-                    <span>Remember me</span>
-                </label>
-                <a href="#" class="forgot-password">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="submit-btn">Login</button>
-        </form>
-
-        <div class="divider">OR</div>
-
-        <div class="register-link">
-            Don't have an account? <a href="register">Sign up</a>
-        </div>
+      <div class="register-link">
+        Don't have an account? <a href="register">Sign up</a>
+      </div>
     </div>
 
     <script>
-        function togglePassword() {
-            var field = document.getElementById('password');
-            var button = field.nextElementSibling;
-            
-            if (field.type === 'password') {
-                field.type = 'text';
-                button.textContent = '🙈';
-            } else {
-                field.type = 'password';
-                button.textContent = '👁️';
-            }
+      function togglePassword() {
+        var field = document.getElementById("password");
+        var button = field.nextElementSibling;
+
+        if (field.type === "password") {
+          field.type = "text";
+          button.textContent = "🙈";
+        } else {
+          field.type = "password";
+          button.textContent = "👁️";
         }
+      }
 
-        function showError(fieldId, message) {
-            var errorElement = document.getElementById(fieldId + 'Error');
-            errorElement.textContent = message;
-            errorElement.classList.add('show');
-        }
+      function showError(id, message) {
+        const errorEl = document.getElementById(id + "Error");
+        if (!errorEl) return;
 
-        function clearError(fieldId) {
-            var errorElement = document.getElementById(fieldId + 'Error');
-            errorElement.classList.remove('show');
-        }
+        errorEl.textContent = message;
+        errorEl.classList.add("show");
+      }
 
-        function clearAllErrors() {
-            clearError('username');
-            clearError('password');
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault();
-            clearAllErrors();
-
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            var rememberMe = document.getElementById('rememberMe').checked;
-
-            var isValid = true;
-
-            // Validate username
-            if (username.length < 3) {
-                showError('username', 'Username must be at least 3 characters');
-                isValid = false;
-            }
-
-            // Validate password
-            if (password.length < 6) {
-                showError('password', 'Password must be at least 6 characters');
-                isValid = false;
-            }
-
-            if (isValid) {
-                // Show success message
-                var successMsg = document.getElementById('successMessage');
-                successMsg.classList.add('show');
-                
-                console.log('Login successful!', {
-                    username: username,
-                    rememberMe: rememberMe
-                });
-
-                // Simulate redirect after 1.5 seconds
-                setTimeout(function() {
-                    // window.location.href = 'dashboard.html';
-                    console.log('Redirecting to dashboard...');
-                }, 1500);
-            }
-        }
-
-        // Clear errors on input
-        document.getElementById('username').addEventListener('input', function() {
-            clearError('username');
+      function clearAllErrors() {
+        document.querySelectorAll(".error-message").forEach((el) => {
+          el.textContent = "";
+          el.classList.remove("show");
         });
+      }
 
-        document.getElementById('password').addEventListener('input', function() {
-            clearError('password');
-        });
+      function handleSubmit(event) {
+        event.preventDefault();
+        clearAllErrors();
 
-        // Handle Enter key on password field
-        document.getElementById('password').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                handleSubmit(event);
-            }
-        });
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        var isValid = true;
+
+        // Validate username
+        if (username.length < 3) {
+          showError("username", "Username must be at least 3 characters");
+          isValid = false;
+        }
+
+        // Validate password
+        if (password.length < 6) {
+          showError("password", "Password must be at least 6 characters");
+          isValid = false;
+        }
+
+        if (isValid) {
+          // Show success message
+          
+
+          const res = fetch("/auth/login-api", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              password: password
+            }),
+          });
+          
+          if (res.ok){
+            var successMsg = document.getElementById("successMessage");
+            successMsg.classList.add("show");
+            setTimeout(function () {
+             window.location.href = 'runner/shell';
+          }, 1500);
+          };
+        }
+      }
     </script>
-</body>
+  </body>
 </html>
