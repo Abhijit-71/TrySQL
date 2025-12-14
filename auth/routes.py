@@ -15,7 +15,7 @@ def reg_api():
     if User.query.filter_by(username=data["username"]).first():
         return jsonify({"msg": "Username already taken"}), 400
     
-    new_user = User(username=data["username"], password=data["password"]) #type:ignore
+    new_user = User(username=data["username"].strip(), password=data["password"].strip()) #type:ignore
     db.session.add(new_user)
     db.session.commit()
 
@@ -27,8 +27,8 @@ def reg_api():
 def login_api():
     
     data = request.get_json()
-    username = data.get("username")
-    password = data.get("password")
+    username = data.get("username").strip()
+    password = data.get("password").strip()
 
     user = User.query.filter_by(username=username).first()
 
