@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <style>
       * {
         margin: 0;
@@ -140,8 +141,11 @@
   <body>
     <div class="dashboard-card">
       <div class="avatar">
-        <img id="avatar-img" src="https://api.dicebear.com/7.x/identicon/svg?seed=random&backgroundColor=f5f7fa
-&colorLevel=600" />
+        <img
+          id="avatar-img"
+          src="https://api.dicebear.com/7.x/identicon/svg?seed=random&backgroundColor=f5f7fa
+&colorLevel=600"
+        />
       </div>
       <h1 class="username" id="username">Hello, {{username}}</h1>
 
@@ -160,19 +164,20 @@
 
     <script>
       function initializeDashboard() {
-        fetchAvatar()
+        fetchAvatar();
         fetchQuote();
       }
-      
-      function fetchAvatar(){
+
+      function fetchAvatar() {
         const el = document.getElementById("username");
-const username = el.textContent.split(" ")[1];
-console.log(username)
-const avatarUrl =
-  `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(username)}&backgroundColor=f5f7fa
+        const username = el.textContent.split(" ")[1];
+        console.log(username);
+        const avatarUrl = `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(
+          username
+        )}&backgroundColor=f5f7fa
 &colorLevel=600`;
 
-document.getElementById("avatar-img").src = avatarUrl;
+        document.getElementById("avatar-img").src = avatarUrl;
       }
 
       function fetchQuote() {
