@@ -1,8 +1,18 @@
+import json
+from urllib.request import urlopen
 from flask import request , jsonify , render_template
 from flask_jwt_extended import jwt_required , get_jwt_identity
 from runner import runner
 from .sql_shell import sql_runner
 from app.models import User
+
+
+@runner.route("/quote")
+@jwt_required()
+def quote():
+    with urlopen("https://zenquotes.io/api/random") as r:
+        data = json.loads(r.read().decode())
+    return jsonify(data),200
 
 
 

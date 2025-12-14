@@ -1,5 +1,5 @@
-from flask import request , jsonify , render_template
-from flask_jwt_extended import create_access_token , set_access_cookies , unset_access_cookies , jwt_required
+from flask import request , jsonify , render_template , redirect
+from flask_jwt_extended import create_access_token , set_access_cookies , unset_access_cookies , jwt_required , verify_jwt_in_request
 from auth import auth
 from app.models import db , User
 
@@ -7,8 +7,8 @@ from app.models import db , User
 # register api routes
 @auth.route("/reg-api",methods=["POST"])
 def reg_api():
+        
     data = request.get_json()
-    print(data)
     if data["password"] != data["password2"]:
         return {'message':'Password not matched'} , 400
     
@@ -25,6 +25,7 @@ def reg_api():
 # register api routes
 @auth.route("/login-api",methods=["POST"])
 def login_api():
+    
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
@@ -54,8 +55,16 @@ def logout_api():
 
 @auth.route("/register")
 def register():
-    return render_template('register.html')
+    try:
+        verify_jwt_in_request()
+        return redirect("/runner/dashboard")
+    except:
+        return render_template('register.html')
 
 @auth.route("/login")
 def login():
-    return render_template('login.html')
+    try:
+        verify_jwt_in_request()
+        return redirect("/runner/dashboard")
+    except:
+        return render_template('login.html')
