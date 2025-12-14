@@ -14,14 +14,15 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0f1423 0%, #252737 100%);
+            background: #0f1423;
             min-height: 100vh;
             color: #e8e7fc;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
+            max-width: 100vw;
+            overflow-x: hidden;
         }
         
         body::before {
@@ -47,6 +48,7 @@
             bottom: 0;
             overflow: hidden;
             z-index: 0;
+            max-width: 100vw;
         }
 
         .pattern-grid {
@@ -150,7 +152,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 100vw;
             margin: 0 auto;
             padding: 20px;
             position: relative;
@@ -219,15 +221,15 @@
             font-size: 24px;
             margin-bottom: 40px;
             opacity: 0.95;
-            font-weight: 300;
+            font-weight: 500;
             color: #e8e7fc;
         }
 
         .hero .tagline {
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 50px;
             opacity: 0.9;
-            max-width: 600px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
             line-height: 1.6;
@@ -262,6 +264,10 @@
         /* Features Section */
         .features {
             padding: 60px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .features h2 {
@@ -293,15 +299,13 @@
         .feature-card:hover {
             background: rgba(37, 39, 55, 0.6);
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(168, 255, 120, 0.2);
-            border: 1px solid rgba(168, 255, 120, 0.3);
+            border: 2px solid rgba(167, 255, 120, 0.703);
         }
 
         .feature-icon {
             font-size: 64px;
             margin-bottom: 20px;
             display: block;
-            filter: drop-shadow(0 0 10px rgba(168, 255, 120, 0.3));
         }
 
         .feature-card h3 {
@@ -319,15 +323,7 @@
         }
 
         /* Demo Section */
-        .demo-section {
-            background: rgba(37, 39, 55, 0.4);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 50px 40px;
-            margin: 60px 20px;
-            border: 1px solid rgba(232, 231, 252, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
+        
 
         .demo-section h2 {
             text-align: center;
@@ -348,7 +344,7 @@
 
         .demo-window {
             background: #252737;
-            border: 2px solid rgba(168, 255, 120, 0.2);
+            border: 1px solid rgba(230, 230, 230, 0.2);
             border-radius: 8px;
             overflow: hidden;
         }
@@ -368,14 +364,13 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #a8ff78;
-            box-shadow: 0 0 10px rgba(168, 255, 120, 0.5);
+            background: #94a3b8;
         }
 
         .demo-input {
             padding: 20px;
             background: #0f1423;
-            border-bottom: 2px solid rgba(168, 255, 120, 0.2);
+            border-bottom: 1px solid rgba(230, 230, 230, 0.2);
         }
 
         .demo-textarea {
@@ -400,7 +395,6 @@
             font-family: 'Courier New', monospace;
             font-size: 14px;
             margin: 0;
-            text-shadow: 0 0 10px rgba(168, 255, 120, 0.3);
         }
 
         /* Footer CTA */
@@ -450,6 +444,25 @@
             .feature-icon {
                 font-size: 48px;
             }
+
+            .demo-textarea {
+                font-size: 9px;
+            }
+            .demo-output pre{
+                font-size: 9px;
+            }
+            .demo-preview{
+                padding: 18px;
+            }
+            .footer-cta h2 {
+                font-size: 32px;
+            }
+            .footer-cta p {
+                font-size: 16px;
+            }
+            .cta-button{
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -480,10 +493,9 @@
             <div class="hero-content">
                 <h1><svg width="100" height="100" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 2c-1.105 0-2 .9-2 2v16c0 1.1.895 2 2 2h18c1.105 0 2-.9 2-2V4c0-1.1-.895-2-2-2z" fill="#2c3e50"/><path d="M3 2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" fill="#34495e"/><path d="M4 5.125V6.25L7 8 4 9.75v1.125L9 8zM9 10v1h5v-1z" fill="#ecf0f1"/></svg>
                     TrySQL</h1>
-                <p class="subtitle">Terminal Made Simple</p>
+                <p class="subtitle">Learn SQL by Doing</p>
                 <p class="tagline">
-                    Say goodbye to intimidating command lines. Run shell commands in a friendly, 
-                    Jupyter-style notebook interface that anyone can use.
+                    Practice SQL queries in your browser without any setup. Write, run, and see results instantly with our interactive SQL playground designed for learners and professionals.
                 </p>
                 <button class="cta-button" onclick="window.location.href='auth/register'">
                     Get Started Now →
@@ -496,37 +508,37 @@
             <h2>Why You'll Love It</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <span class="feature-icon">📓</span>
+                    <span class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 27 32" xml:space="preserve"><g fill="#fff"><path d="M23.5 32c.869 0 1.5-.631 1.5-1.5v-28c0-.869-.631-1.5-1.5-1.5h-20C2.631 1 2 1.631 2 2.5v1.167a.5.5 0 0 0 1 0V2.5c0-.313.187-.5.5-.5h4.562v29H3.5c-.313 0-.5-.187-.5-.5v-.917a.5.5 0 0 0-1 0v.917c0 .869.631 1.5 1.5 1.5zM9 2h14.5c.313 0 .5.187.5.5v28c0 .313-.187.5-.5.5H9zm18 27.5v-26a.5.5 0 0 0-1 0v26a.5.5 0 0 0 1 0"/><path d="M.5 11h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0 0 1m0-4h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0 0 1m0 8h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0 0 1m0 8h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0 0 1m0-4h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0 0 1m0 8h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0 0 1"/></g></svg></span>
                     <h3>Notebook-Style Cells</h3>
                     <p>Organize your commands in separate cells, just like Jupyter notebooks. Keep your work clean and structured.</p>
                 </div>
 
                 <div class="feature-card">
-                    <span class="feature-icon">🎯</span>
+                    <span class="feature-icon"><svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="17" height="14" rx="2" stroke="#ffff"/><path d="m7 10 2 2-2 2" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14h4" stroke="#fff" stroke-linecap="round"/></svg></span>
                     <h3>No Terminal Experience Needed</h3>
                     <p>Clear labels, helpful hints, and visual buttons make it easy for anyone to run shell commands confidently.</p>
                 </div>
 
                 <div class="feature-card">
-                    <span class="feature-icon">⚡</span>
+                    <span class="feature-icon"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.32 13.28h3.09v7.2c0 1.06 1.32 1.56 2.02.76l7.57-8.6c.66-.75.13-1.92-.87-1.92h-3.09v-7.2c0-1.06-1.32-1.56-2.02-.76l-7.57 8.6c-.65.75-.12 1.92.87 1.92" stroke="#fff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path opacity=".4" d="M8.5 4h-7m6 16h-6m3-8h-3" stroke="#ededed" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                     <h3>Instant Visual Feedback</h3>
                     <p>See your command output immediately in a beautiful, color-coded terminal display. No confusion, just results.</p>
                 </div>
 
                 <div class="feature-card">
-                    <span class="feature-icon">🔄</span>
+                    <span class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 64 64" xml:space="preserve"><g fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="10"><path d="M1 15h54v42H1z"/><path d="M11 12V7h52v43h-5M1 23h54m-45-4H6m12 0h-4m12 0h-4"/></g></svg></span>
                     <h3>Multiple Commands at Once</h3>
                     <p>Add unlimited cells to run different commands side-by-side. Compare outputs and test variations easily.</p>
                 </div>
 
                 <div class="feature-card">
-                    <span class="feature-icon">⌨️</span>
+                    <span class="feature-icon"><svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path style="fill:#333" d="M66 14 48 30v9l2 1 2-7 14-12zm28 13L75 43v8l7 3-19 18v26l22-24-2-11 14-14zM53 41 33 58v20l6-17 14-12z"/><path style="fill:#999" d="M48 30 26 20 46 4.6 66 14m9 29L52 33l19-16 23 10M63 72 39 61l20-17 23 10m-49 4L11 48l19-17 23 10"/><path style="fill:#ccc" d="m50 40 2-7 23 10v8l-16-7-6 5v-8zm-32 1 8-21 22 10v9l-18-8zM3.2 67 11 48l22 10v20l6-17 24 11v26z"/><path style="fill:none;stroke:#111;stroke-width:2" d="M65 53c-2-3-6-3-7-1s5 4 2 7c-1 1-6 0-7-3m19-35-4 7 6-1v5l8-5M47 16l1 4m3-8c-2-2-6-2-9 1-2 2 0 5 4 5 3 0 7-3 5-6zM28 41l6 3m-11-1 12-4-3 9"/><path style="fill:none;stroke:#222;stroke-width:1" d="m18 41 8-21L46 4.6 66 14v7M32 82l7-21 20-17 23 10 3 20-22 24L3.2 67 11 48l19-17 23 10v8m-3-9 2-7 19-16 23 10 3 22-14 14"/></svg></span>
                     <h3>Keyboard Shortcuts</h3>
                     <p>Power users can use Ctrl+Enter to run commands quickly. Work at your own pace, your way.</p>
                 </div>
 
                 <div class="feature-card">
-                    <span class="feature-icon">🎨</span>
+                    <span class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 32 32" xml:space="preserve"><path d="M8.5 10h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 0 1M7 11.5a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 0-1h-2a.5.5 0 0 0-.5.5m.5 6.5h2a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1m-1 2h2a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1M22 13.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1 0-1h13a.5.5 0 0 1 .5.5M8.5 16h13a.5.5 0 0 0 0-1h-13a.5.5 0 0 0 0 1m8-4h-5a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1m4-3h-10a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1M29 4H3a3 3 0 0 0-3 3v16a3 3 0 0 0 3 3h9v3h-1.5a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1H20v-3h9a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3M19 29h-6v-3h6zm12-6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h26a2 2 0 0 1 2 2z" style="fill:#fff"/></svg></span>
                     <h3>Beautiful Interface</h3>
                     <p>Modern design with smooth animations and intuitive controls. Who said terminals have to be ugly?</p>
                 </div>
@@ -545,10 +557,20 @@
                         <span>[1] INPUT</span>
                     </div>
                     <div class="demo-input">
-                        <textarea class="demo-textarea" rows="2" readonly>echo "Hello, World!"</textarea>
+                        <textarea class="demo-textarea" rows="2" readonly>SELECT * FROM student;</textarea>
                     </div>
                     <div class="demo-output">
-                        <pre>Hello, World!</pre>
+                        <pre>
++------+-------------+-------+--------+
+|   id | name        |   age | addr   |
++======+=============+=======+========+
+|    1 | John Doe    |    24 | US     |
++------+-------------+-------+--------+
+|    2 | Lisa Nebula |    25 | US     |
++------+-------------+-------+--------+
+
+2 row(s) in set
+                        </pre>
                     </div>
                 </div>
             </div>
@@ -556,17 +578,23 @@
 
         <!-- Footer CTA -->
         <div class="footer-cta">
-            <h2>Ready to Simplify Your Shell?</h2>
-            <p>Start running commands in a friendly interface today. No installation required.</p>
+            <h2>Ready to Master SQL ?</h2>
+            <p>Join thousands of developers practicing SQL queries every day. No credit card required, no installation needed.</p>
             <button class="cta-button" onclick="window.location.href='#'">
-                Launch Interactive Shell →
+                Launch SQL Shell →
             </button>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p>Interactive Shell - Making terminals accessible to everyone</p>
-            <p style="margin-top: 10px; font-size: 14px;">Built with ❤️ for beginners and pros alike</p>
+            <p style="font-size:14px;">TrySQL - Your browser-based SQL playground</p>
+            <p style="margin-top: 20px; font-size: 12px;">Created and maintained by <a
+              style="color: #a8ff78;"
+              href="https://github.com/Abhijit-71"
+              target="_blank"
+              >@Abhijit-71</a
+            ></p>
+            <p style="margin-top: 20px; font-size: 12px;">© 2025-2026 TrySQL. All rights reserved.</p>
         </div>
     </div>
 </body>

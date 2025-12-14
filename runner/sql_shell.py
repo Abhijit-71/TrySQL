@@ -41,7 +41,12 @@ def sql_runner(user:str,query:str) -> str:
                     affected = cursor.rowcount
                     if affected == -1:  # DDL usually returns -1
                         affected = 0
-                    result += f"Query OK, {affected} row(s) affected"
+                    rows = cursor.fetchall()
+                    if rows:
+                        cols = [desc[0] for desc in cursor.description]
+                        result += tabulate(rows, headers=cols, tablefmt="grid")
+                        
+                    result += f"\n\nQuery OK, {affected} row(s) affected"
 
 
             
