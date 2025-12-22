@@ -30,6 +30,8 @@
         padding: 30px;
         padding-left: 0px;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
       }
 
       .header h1 {
@@ -135,13 +137,13 @@
         border-radius: 8px;
         padding: 12px;
         font-family: "Courier New", monospace;
-        font-size: 14px;
+        font-size: 15px;
         resize: vertical;
-        min-height: 50px;
+        min-height: 100px;
         background: #1a1d29;
         color: #eaeaea;
         transition: all 0.3s ease;
-        scrollbar-width: none; 
+        scrollbar-width: none;
         -ms-overflow-style: none;
       }
 
@@ -188,7 +190,7 @@
         margin: 0;
         overflow: auto;
         white-space: pre;
-        scrollbar-width: none; 
+        scrollbar-width: none;
         -ms-overflow-style: none;
       }
 
@@ -224,9 +226,19 @@
         font-size: 13px;
         margin-top: 50px;
       }
+
+      .dashboard img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid white;
+      }
       @media (max-width: 458px) {
         .output-area pre{
           font-size: 11px;
+        }
+        .input-area textarea {
+          font-size: 12px;
         }
       }
     </style>
@@ -234,8 +246,17 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>SQL Shell</h1>
-        <p>Type commands and press the Run button or Ctrl+Enter.</p>
+        <div class="title">
+            <h1>SQL Shell</h1>
+            <p>Type commands and press the Run button or Ctrl+Enter.</p>
+        </div>
+        <div class="dashboard">
+            <a href="/runner/dashboard">
+                <img
+          id="avatar-img"
+          src="https://api.dicebear.com/7.x/identicon/svg?seed=random&backgroundColor=f5f7fa&colorLevel=600"/>
+            </a>
+        </div>
       </div>
 
       <div id="cells-container"></div>
@@ -371,7 +392,7 @@
         var cellEl = document.getElementById("cell-" + cellId);
         cellEl.remove();
 
-        rerenderAllCells();
+        //rerenderAllCells();
       }
 
       function addCell() {
@@ -406,7 +427,17 @@
         });
       }
 
+      function fetchAvatar() {
+        const avatarUrl = `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(
+          "{{username}}"
+        )}&backgroundColor=f5f7fa&colorLevel=600`;
+
+        document.getElementById("avatar-img").src = avatarUrl;
+      }
+
+
       createCell();
+      fetchAvatar();
     </script>
   </body>
 </html>
