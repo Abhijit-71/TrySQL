@@ -32,7 +32,10 @@ def run_sql():
 @runner.route("/shell")
 @jwt_required()
 def shell():
-    return render_template('shell.html')
+    user_id = get_jwt_identity()
+    user = User.query.filter_by(id=int(user_id)).first()
+    username = user.username #type:ignore
+    return render_template('shell.html',username=username)
 
 
 # dashboard route
